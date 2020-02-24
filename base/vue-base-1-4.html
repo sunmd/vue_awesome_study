@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head >
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">{{massage}}
+            <div v-bind:id="message"> </div>
+            <div>
+                <h3>这个是测试vue渲染的功能</h3>
+                v-if 不会做渲染,但是v-show会
+                <span v-if="item.del" id="1">{{item.content}}</span>
+                <span v-else style="text-decoration: line-through" id="2">{{item.content}}</span>
+                <span v-show="item.del" id="3">{{item.content}}</span>
+            </div>
+            <h3>这个是vue的for循环写法</h3>
+            <ul>
+                <li v-for="it in list"> {{it.context}}</li>
+            </ul>
+        </div>
+
+        <script>
+
+            var vm = new Vue({
+                el : "#app",
+                data : {
+                    massage : "hello world ! ",
+                    message : "vue-id",
+                    item : {
+                        content : "迎着风,逆着光",
+                        del : false
+                    },
+                    list : [
+                        {
+                            context : "for 1",
+                        },
+                        {
+                            context : "for 2",
+                        },
+                        {
+                            context : "for 3",
+                        },
+                        {
+                            context : "for 4",
+                        },
+                        {
+                            context : "for 5",
+                        },
+                        {
+                            context : "for 6",
+                        }]
+
+                }
+            })
+        </script>
+    </body>
