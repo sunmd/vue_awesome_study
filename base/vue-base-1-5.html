@@ -5,5 +5,83 @@
     </head>
     <body>
         <div id="app">
+            <h3>目前测试的时候组件component当props定义了之后data是不能填写的否者会报错.也就是两个目前来看是不能共存的</h3>
+            <ul>
+                <todo-item :del="del" :content="content"></todo-item>
+            </ul>
+
+            </hr>
+            <todo-list></todo-list>
+        </div>
+            <script>
+                Vue.component("todo-list", {
+                    template: `
+                    <ul>
+                        <todo-item v-for="item in list" :del="item.del" :content="item.title"></todo-item>
+                    </ul>
+                    `,
+                    data: function() {
+                        return {
+                            list:[
+
+                                {
+                                    del: false,
+                                    title: "this is 1"
+                                },
+                                {
+                                    del: true,
+                                    title: "this is 2"
+                                },
+                                {
+                                    del: true,
+                                    title: "this is 3"
+                                },
+                                {
+                                    del: true,
+                                    title: "this is 4"
+                                },
+                                {
+                                    del: false,
+                                    title: "this is 6"
+                                },
+                                {
+                                    del: false,
+                                    title: "this is 7"
+                                }
+                                    
+                            ]
+                        }
+                    }
+                })
+                Vue.component("todo-item", {
+                    props: {
+                        content: String,
+                        del: {
+                            type: Boolean,
+                            default: false
+                        }
+                    },
+                    template: `
+                    <li>
+                        <span v-if="!del" >{{content}}</span>
+                        <span v-else style="text-decoration: line-through">{{content}}</span>
+                    </li>
+                    `,
+                    data: function() {
+                        return {
+                        }
+                    },
+                    methods: {}
+                })
+
+                var vm = new Vue({
+                    el: "#app",
+                    data: {
+                        content: "123 template",
+                        del: false
+                        }
+                })
+
+            </script>
     </body>
 </html>
