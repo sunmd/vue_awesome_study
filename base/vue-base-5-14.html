@@ -5,24 +5,21 @@
     </head>
     <body>
         <div id="app">
-            <h3 style="text-decoration: line-through;">目前测试的时候组件component当props定义了之后data是不能填写的否则会报错.也就是两个目前来看是不能共存的</h3>
-            <h2 >现在的测试时这样的,如果设置props那么说明这个数据时外部引用的如一个Vue,必须要要有一个外部的list,但是如果没有props的话,那么就是内部的data数据</h2>
+            <h3>
+                这时消息响应的测试,Vue用v-on:来引用消息的响应,简化起来就是@.如果发送消息时$.emit来发送
+            </h3>
             <ul>
                 <todo-item :del="del" :content="content"></todo-item>
             </ul>
 
             </hr>
             <todo-list ></todo-list>
-            <!-- <todo-list :list=list></todo-list> -->
         </div>
             <script>
                 Vue.component("todo-list", {
-                    /**props: {
-                        list: Array
-                    },**/
                     template: `
                     <ul>
-                        <todo-item v-for="item in list" :del="item.del" :content="item.title"></todo-item>
+                        <todo-item v-for="item in list" :del="item.del" :content="item.title" @delete="handleDelete"></todo-item>
                     </ul>
                     `,
                     data: function() {
@@ -56,6 +53,11 @@
                                     
                             ]
                         }
+                    },
+                    methods: {
+                        handleDelete(val) {
+                            console.log("handleDelete", val)
+                        }
                     }
                 })
                 Vue.component("todo-item", {
@@ -70,48 +72,27 @@
                     <li>
                         <span v-if="!del" >{{content}}</span>
                         <span v-else style="text-decoration: line-through">{{content}}</span>
+                        <button v-show="!del" @click.stop="handleClick">删除</button>
                     </li>
                     `,
                     data: function() {
                         return {
                         }
                     },
-                    methods: {}
+                    methods: {
+                        handleClick(e) {
+                            console.log("点击删除!")
+                            this.$emit("delete", this.content)
+                            //e.stop
+                        }
+                    }
                 })
 
                 var vm = new Vue({
                     el: "#app",
                     data: {
                         content: "123 template",
-                        del: false,
-                        /**list:[
-
-                            {
-                                del: false,
-                                title: "this is 1"
-                            },
-                            {
-                                del: true,
-                                title: "this is 2"
-                            },
-                            {
-                                del: true,
-                                title: "this is 3"
-                            },
-                            {
-                                del: true,
-                                title: "this is 4"
-                            },
-                            {
-                                del: false,
-                                title: "this is 6"
-                            },
-                            {
-                                del: false,
-                                title: "this is 7"
-                            }
-                                
-                        ]**/
+                        del: false
                         }
                 })
 

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <h3>
+               插槽（slot）的概念很简单，其实就是分发内容。
+               插槽分为：普通插槽、作用域插槽、默认插槽
+               插槽的作用：传递复杂内容的方式
+               作用域插槽的函数理解：
+               作用域插槽则可以理解为，本质上是返回组件的函数，我们可以把下面一整段标签当成是一个函数
+               然后我们在组件的内部通过`slot`的形式，去调用这个函数，并且给这个函数传递了一个
+               value 值：slot:
+               templateFunction(value)，在这个函数内，我们可以根据传递的 value
+               值来指定各种操作，如：函数返回了一个 span 标签，并在其中显示
+               value 值。
+               当然我们也可以做其他各种各样的事情，譬如判断 value
+               值
+            </h3>
+            <h3>1.匿名插槽直接什么都直接写</h3>
+            <h3>2.具名插槽要协商属性slot</h3>
+            <h3>3.作用域插槽里面模板上带上v-if会报错有待研究</h3>
+            <ul>
+                <todo-item :del="del" :content="content"></todo-item>
+            </ul>
+
+            </hr>
+            <todo-list>
+                <todo-item v-for="item in list" :del="item.del" :content="item.title" @delete="handleDelete">
+                    <span slot="pre-icon"> --前--</span>
+                    <template #mid="{del, content}">
+                        <span>{{del}}{{content}}</span>
+                    </template>
+                    <template v-slot:suf-icon>
+                        <span > --后--</span>
+                    </template>
+                </todo-item>
+            </todo-list>
+        </div>
+            <script>
+                Vue.component("todo-list", {
+                    template: `
+                    <ul>
+                        <slot></slot>
+                    </ul>
+                    `,
+                    data: function() {
+                        return {
+                        }
+                    },
+                    methods: {
+                    }
+                })
+                Vue.component("todo-item", {
+                    props: {
+                        content: String,
+                        del: {
+                            type: Boolean,
+                            default: false
+                        }
+                    },
+                    template: `
+                    <li>
+                        <slot name="pre-icon"></slot>
+                        <slot name="mid" :del="del" :content="content"></slot>
+                        <span v-if="!del" >{{content}}</span>
+                        <span v-else style="text-decoration: line-through">{{content}}</span>
+                        <button v-show="!del" @click.stop="handleClick">删除</button>
+                        <slot name="suf-icon"></slot>
+                    </li>
+                    `,
+                    data: function() {
+                        return {
+                        }
+                    },
+                    methods: {
+                        handleClick(e) {
+                            console.log("点击删除!")
+                            this.$emit("delete", this.content)
+                            //e.stop
+                        },
+                    }
+                })
+
+                var vm = new Vue({
+                    el: "#app",
+                    data: {
+                        content: "123 template",
+                        del: false,
+                        list:[
+
+                            {
+                                del: false,
+                                title: "this is 8"
+                            },
+                            {
+                                del: true,
+                                title: "this is 9"
+                            },
+                            {
+                                del: true,
+                                title: "this is 10"
+                            },
+                            {
+                                del: true,
+                                title: "this is 11"
+                            },
+                            {
+                                del: false,
+                                title: "this is 12"
+                            },
+                            {
+                                del: false,
+                                title: "this is 13"
+                            }
+                                
+                        ]
+                    },
+                    methods: {
+                        handleDelete(val) {
+                            console.log("handleDelete", val)
+                        }
+
+                    }
+                })
+
+            </script>
+    </body>
+</html>
