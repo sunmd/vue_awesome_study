@@ -25,9 +25,26 @@ const store = new Vuex.Store({
     getters: {
         doneTodos: state => state.todos.filter(todo => todo.done ),
         doneTodosCount: (state, getters) => {
-            return getters.doneTodos.length;
+            return getters.doneTodos.length
         },
         getTodosByid: state => id => state.todos.find(todo => todo.id === id)
+    },
+    actions: {
+        increment: (context) => context.commit(STORE_MUSTATION.ADD_COUNT),
+        incrementAsync: ({commit}, payload) => setTimeout(() => commit(STORE_MUSTATION.ADD_NUMBER, payload), 1000),
+        incrementAsync2({dispatch}) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    console.log("this is async2");
+                    dispatch("incrementAsync", {acount:2})
+                    resolve("resolve")
+                }, 1000)
+            })
+        },
+        actionAysnc({dispatch}) {
+            dispatch('incrementAsync2').then((templog) => console.log(templog))
+        }
+
     }
 })
 
