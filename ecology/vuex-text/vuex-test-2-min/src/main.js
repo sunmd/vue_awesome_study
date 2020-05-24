@@ -8,7 +8,16 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    count: 0
+    count: 0,
+    num: 1
+  },
+  getters: {
+    // countTwo: (state) => state.num*2
+    countTwo(state) {
+      return state.num*2;
+    },
+
+    doubleCount: state => state.count*2
   },
   mutations: {
     increment: state => state.count++

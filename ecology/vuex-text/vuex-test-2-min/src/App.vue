@@ -2,6 +2,7 @@
   <div id="app">
     count: {{count}}
     <button @click="increment">count++</button>
+    <p>111 {{countTwo}}</p>
   </div>
 </template>
 
@@ -11,6 +12,9 @@ export default {
   computed: {
     count() {
       return this.$store.state.count;
+    },
+    countTwo() {
+      return this.$store.getters.doubleCount;
     }
   },
   methods: {
