@@ -24,11 +24,7 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
-  data: function() {
-    return {
-      tempProductList: []
-    };
-  },
+  inject: ["tempProductList"],
   computed: {
     ...mapState({ products: state => state.products.all })
   },
@@ -57,7 +53,7 @@ export default {
     addTempCart(product) {
       this.subProductInventory(product);
       this.getTempProduct(product).count++;
-    },
+    }
   },
   // methods: {
   //   addProductToCart(product){

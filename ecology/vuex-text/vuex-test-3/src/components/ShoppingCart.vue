@@ -19,6 +19,7 @@
 import { mapGetters, mapState } from 'vuex'
 
 export default {
+  inject: ['tempProductList'],
   computed: {
     ...mapState({
       checkoutStatus: state => state.cart.checkoutStatus
@@ -45,7 +46,10 @@ export default {
   // },
   methods: {
     checkout (products) {
-      this.$store.dispatch('cart/checkout', products)
+      for (let i=0; i<this.tempProductList.length; i++) {
+        this.tempProductList[i].count  = 0;
+      }
+      this.$store.dispatch('cart/checkout', products);
     }
   },
 }

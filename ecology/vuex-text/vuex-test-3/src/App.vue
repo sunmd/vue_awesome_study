@@ -16,6 +16,19 @@ import ProductList from './components/ProductList.vue'
 import ShoppingCart from './components/ShoppingCart.vue'
 
 export default {
+  watch: {
+    tempProductList: {
+      handler: function(val) {
+        console.log(val);
+      },
+      deep: true
+    }
+  },
+  provide() {
+    return  {
+      tempProductList: []
+    }
+  },
   computed: mapState({
     email: state => state.userInfo.email
   }),
