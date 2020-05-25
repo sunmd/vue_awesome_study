@@ -2,20 +2,25 @@
   <div id="app">
     <h1>购物车示例</h1>
     <p>账号: {{email}}</p>
-    <hr>
+    <hr />
     <h2>产品</h2>
-    <ProductList/>
-    <hr>
-    <ShoppingCart/>
+    <ProductList />
+    <hr />
+    <ShoppingCart />
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import ProductList from './components/ProductList.vue'
-import ShoppingCart from './components/ShoppingCart.vue'
+import { mapState } from "vuex";
+import ProductList from "./components/ProductList.vue";
+import ShoppingCart from "./components/ShoppingCart.vue";
 
 export default {
+  data: function() {
+    return {
+      tempProductList: []
+    };
+  },
   watch: {
     tempProductList: {
       handler: function(val) {
@@ -25,13 +30,13 @@ export default {
     }
   },
   provide() {
-    return  {
-      tempProductList: []
-    }
+    return {
+      tempProductList: this.tempProductList
+    };
   },
   computed: mapState({
     email: state => state.userInfo.email
   }),
-  components: { ProductList, ShoppingCart },
-}
+  components: { ProductList, ShoppingCart }
+};
 </script>
