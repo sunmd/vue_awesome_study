@@ -1,13 +1,9 @@
 <template>
-  <div> 分析也 </div>
+  <div>分析也</div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
-<style>
-
-</style>
+<style></style>

@@ -1,5 +1,5 @@
 <template>
-  <div>basicform</div>
+  <div>菜单</div>
 </template>
 
 <script>
