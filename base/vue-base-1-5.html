@@ -14,8 +14,26 @@
             </hr>
             <todo-list ></todo-list>
             <!-- <todo-list :list=list></todo-list> -->
+            <base-checkbox v-model="lovingVue"></base-checkbox>
         </div>
             <script>
+	            // v-model的例子程序
+	            Vue.component('base-checkbox', {
+		            model: {
+				    	prop: 'checked',
+				    	event: 'change'
+ 					 },
+  					props: {
+    					checked: Boolean
+  					},
+				    template: `
+					    <input
+					      type="checkbox"
+					      v-bind:checked="checked"
+					      v-on:change="$emit('change', $event.target.checked)"
+					    >
+					`
+				})
                 Vue.component("todo-list", {
                     /**props: {
                         list: Array
@@ -84,6 +102,7 @@
                     data: {
                         content: "123 template",
                         del: false,
+                        lovingVue: true,
                         /**list:[
 
                             {
