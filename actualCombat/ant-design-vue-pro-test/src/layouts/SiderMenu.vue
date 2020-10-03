@@ -1,9 +1,15 @@
 <template>
-  <div>菜单</div>
+  <div class="side">菜单</div>
 </template>
 
 <script>
 export default {};
 </script>
 
-<style></style>
+<style scoped>
+.side {
+  background-color: red;
+  text-align: center;
+  color: #000000;
+}
+</style>

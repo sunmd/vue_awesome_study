@@ -6,7 +6,7 @@
 export default {};
 </script>
 <style scoped>
-.header{
+.header {
   float: right;
 }
 </style>
