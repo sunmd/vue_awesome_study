@@ -7,6 +7,7 @@
         v-model="collapsed"
         collapsible
         :theme="navTheme"
+        width="256px"
       >
         <div class="logo">Ant Design Vue Pro</div>
         <SiderMenu />
