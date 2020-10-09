@@ -4,15 +4,15 @@
       :default-selected-keys="['1']"
       :default-open-keys="['2']"
       mode="inline"
-      theme="dark"
+      :theme="theme"
       :inline-collapsed="collapsed"
     >
-      <template v-for="item in list">
-        <a-menu-item v-if="!item.children" :key="item.key">
-          <a-icon type="pie-chart" />
-          <span>{{ item.title }}</span>
+      <template v-for="item in menuData">
+        <a-menu-item v-if="!item.children" :key="item.path">
+          <a-icon v-if="item.meta.icon" :type="item.meta.icon" />
+          <span>{{ item.meta.title }}</span>
         </a-menu-item>
-        <sub-menu v-else :key="item.key" :menu-info="item" />
+        <sub-menu v-else :key="item.path" :menu-info="item" />
       </template>
     </a-menu>
   </div>
@@ -38,23 +38,23 @@
 //   props: ['menuInfo'],
 // };
 
-import { Menu } from 'ant-design-vue';
+import { Menu } from "ant-design-vue";
 const SubMenu = {
   template: `
-      <a-sub-menu :key="menuInfo.key" v-bind="$props" v-on="$listeners">
+      <a-sub-menu :key="menuInfo.path" v-bind="$props" v-on="$listeners">
         <span slot="title">
-          <a-icon type="mail" /><span>{{ menuInfo.title }}</span>
+          <a-icon v-if="menuInfo.meta.icon" :type="menuInfo.meta.icon" /><span>{{ menuInfo.meta.title }}</span>
         </span>
         <template v-for="item in menuInfo.children">
-          <a-menu-item v-if="!item.children" :key="item.key">
-            <a-icon type="pie-chart" />
-            <span>{{ item.title }}</span>
+          <a-menu-item v-if="!item.children" :key="item.path">
+            <a-icon v-if="item.meta.icon" :type="item.meta.icon" />
+            <span>{{ item.meta.title }}</span>
           </a-menu-item>
-          <sub-menu v-else :key="item.key" :menu-info="item" />
+          <sub-menu v-else :key="item.path" :menu-info="item" />
         </template>
       </a-sub-menu>
     `,
-  name: 'SubMenu',
+  name: "SubMenu",
   // must add isSubMenu: true
   isSubMenu: true,
   props: {
@@ -62,40 +62,48 @@ const SubMenu = {
     // Cannot overlap with properties within Menu.SubMenu.props
     menuInfo: {
       type: Object,
-      default: () => ({}),
-    },
-  },
+      default: () => ({})
+    }
+  }
 };
 export default {
+  props: {
+    theme: {
+      type: String,
+      default: "dark"
+    }
+  },
   components: {
-    'sub-menu': SubMenu,
+    "sub-menu": SubMenu
   },
   data() {
+    const menuData = this.getMenuData(this.$router.options.routes);
+    console.log(menuData);
     return {
       collapsed: false,
-      list: [
-        {
-          key: '1',
-          title: 'Option 1',
-        },
-        {
-          key: '2',
-          title: 'Navigation 2',
-          children: [
-            {
-              key: '2.1',
-              title: 'Navigation 3',
-              children: [{ key: '2.1.1', title: 'Option 2.1.1' }],
-            },
-          ],
-        },
-      ],
+      menuData
     };
   },
   methods: {
     toggleCollapsed() {
       this.collapsed = !this.collapsed;
     },
-  },
+    getMenuData(routes) {
+      const menuData = [];
+      routes.forEach(item => {
+        if (item.name && !item.hiddenInMenu) {
+          const newItem = [...item];
+          delete newItem.children;
+          if (item.children && !item.hiddenChildrenInMenu) {
+            newItem.children = this.getMenuData(item.children);
+          }
+          menuData.push(newItem);
+          }else if(item.children && !item.hiddenInMenu && !item.hiddenChildrenInMenu) {
+            menuData.push(...this.getMenuData(item.children));
+          }
+      });
+      return menuData;
+    }
+  }
 };
 </script>

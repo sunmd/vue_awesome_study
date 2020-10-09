@@ -9,6 +9,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/User",
+    hiddenInMenu: true,
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -45,6 +46,7 @@ const routes = [
       {
         path: "/dashboard",
         name: "dashboard",
+        meta: { icon: "dashboard", title: "仪表盘" },
         component: { render: h => h("router-view") },
         children: [
           {
@@ -60,17 +62,21 @@ const routes = [
       {
         path: "/form",
         name: "form",
+        meta: { icon: "form", title: "表单" },
         component: { render: h => h("router-view") },
         children: [
           {
             path: "/form/baic-form",
             name: "basicform",
+            meta: { title: "基础表单" },
             component: () =>
               import(/* webpackChunkName: "form" */ "../views/Forms/BasicForm")
           },
           {
             path: "/form/step-form",
             name: "stepform",
+            meta: { title: "分布表单" },
+            hiddenChildrenInMenu: true,
             component: () =>
               import(/* webpackChunkName: "form" */ "../views/Forms/StepForm"),
             children: [
@@ -111,6 +117,7 @@ const routes = [
   {
     path: "*",
     name: "404",
+    hiddenInMenu: true,
     component: NotFound
   }
 ];
