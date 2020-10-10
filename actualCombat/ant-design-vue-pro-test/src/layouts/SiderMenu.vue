@@ -19,24 +19,6 @@
 </template>
 
 <script>
-// recommend use functional component
-// <template functional>
-//   <a-sub-menu :key="props.menuInfo.key">
-//     <span slot="title">
-//       <a-icon type="mail" /><span>{{ props.menuInfo.title }}</span>
-//     </span>
-//     <template v-for="item in props.menuInfo.children">
-//       <a-menu-item v-if="!item.children" :key="item.key">
-//         <a-icon type="pie-chart" />
-//         <span>{{ item.title }}</span>
-//       </a-menu-item>
-//       <sub-menu v-else :key="item.key" :menu-info="item" />
-//     </template>
-//   </a-sub-menu>
-// </template>
-// export default {
-//   props: ['menuInfo'],
-// };
 
 import { Menu } from "ant-design-vue";
 const SubMenu = {
@@ -78,6 +60,7 @@ export default {
   },
   data() {
     const menuData = this.getMenuData(this.$router.options.routes);
+    console.log("is over");
     console.log(menuData);
     return {
       collapsed: false,
@@ -91,17 +74,38 @@ export default {
     getMenuData(routes) {
       const menuData = [];
       routes.forEach(item => {
+        //有name属性且不隐藏的情况
         if (item.name && !item.hiddenInMenu) {
-          const newItem = [...item];
+          const newItem = { ...item };
           delete newItem.children;
+          //有子属性的情况,且子属性不隐藏
           if (item.children && !item.hiddenChildrenInMenu) {
             newItem.children = this.getMenuData(item.children);
           }
           menuData.push(newItem);
-          }else if(item.children && !item.hiddenInMenu && !item.hiddenChildrenInMenu) {
+          // 没有名字不隐藏,子属性也不隐藏,且有子属性
+          } else if (
+            !item.hiddenInMenu &&
+            !item.hiddenChildrenInMenu &&
+            item.children
+            ) {
             menuData.push(...this.getMenuData(item.children));
           }
       });
+
+      /* routes.forEach(item => { */
+      /*   if (item.name && !item.hiddenInMenu) { */
+      /*     const newItem = [...item]; */
+      /*     delete newItem.children; */
+      /*     console.log(newItem); */
+      /*     if (item.children && !item.hiddenChildrenInMenu) { */
+      /*       newItem.children = this.getMenuData(item.children); */
+      /*     } */
+      /*     menuData.push(newItem); */
+      /*     }else if(item.children && !item.hiddenInMenu && !item.hiddenChildrenInMenu) { */
+      /*       menuData.push(...this.getMenuData(item.children)); */
+      /*     } */
+      /* }); */
       return menuData;
     }
   }
