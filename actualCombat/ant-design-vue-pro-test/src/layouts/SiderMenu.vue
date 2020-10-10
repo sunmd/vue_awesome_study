@@ -19,7 +19,6 @@
 </template>
 
 <script>
-
 import { Menu } from "ant-design-vue";
 const SubMenu = {
   template: `
@@ -84,13 +83,13 @@ export default {
           }
           menuData.push(newItem);
           // 没有名字不隐藏,子属性也不隐藏,且有子属性
-          } else if (
-            !item.hiddenInMenu &&
-            !item.hiddenChildrenInMenu &&
-            item.children
-            ) {
-            menuData.push(...this.getMenuData(item.children));
-          }
+        } else if (
+          !item.hiddenInMenu &&
+          !item.hiddenChildrenInMenu &&
+          item.children
+        ) {
+          menuData.push(...this.getMenuData(item.children));
+        }
       });
 
       /* routes.forEach(item => { */

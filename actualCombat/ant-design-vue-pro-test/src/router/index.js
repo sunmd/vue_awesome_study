@@ -52,7 +52,7 @@ const routes = [
           {
             path: "/dashboard/analysis",
             name: "analysis",
-            meta: {title: "分析页"},
+            meta: { title: "分析页" },
             component: () =>
               import(
                 /* webpackChunkName: "dashboard" */ "../views/Dashboard/Analysis"

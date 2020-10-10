@@ -10,7 +10,7 @@
         width="256px"
       >
         <div class="logo">Ant Design Vue Pro</div>
-        <SiderMenu :theme="navTheme"/>
+        <SiderMenu :theme="navTheme" />
       </a-layout-sider>
       <a-layout>
         <a-layout-header style="background: #fff; padding: 0">
