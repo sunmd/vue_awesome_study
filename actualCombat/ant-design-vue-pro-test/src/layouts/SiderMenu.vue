@@ -62,6 +62,10 @@ export default {
     theme: {
       type: String,
       default: "dark"
+    },
+    collapsed: {
+      type: Boolean,
+      default: false
     }
   },
   components: {
@@ -71,6 +75,9 @@ export default {
     "$route.path": function(val) {
       this.selectedKeys = this.selectedKeysMap[val];
       this.openKeys = this.collapsed ? [] : this.openKeysMap[val];
+    },
+    collapsed: function(val) {
+      console.log(val);
     }
   },
   data() {
@@ -82,7 +89,6 @@ export default {
     console.log(this.selectedKeysMap);
     console.log(this.openKeysMap);
     return {
-      collapsed: false,
       menuData,
       selectedKeys: this.selectedKeysMap[this.$route.path],
       openKeys: this.collapsed ? [] : this.openKeysMap[this.$route.path]

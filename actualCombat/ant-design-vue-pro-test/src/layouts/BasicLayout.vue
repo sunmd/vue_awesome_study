@@ -10,7 +10,7 @@
         width="256px"
       >
         <div class="logo">Ant Design Vue Pro</div>
-        <SiderMenu :theme="navTheme" />
+        <SiderMenu :theme="navTheme" :collapsed="collapsed" />
       </a-layout-sider>
       <a-layout>
         <a-layout-header style="background: #fff; padding: 0">
@@ -52,6 +52,12 @@ export default {
     },
     navLayout() {
       return this.$route.query.navLayout || "left";
+    }
+  },
+  watch: {
+    collapsed: function(val) {
+      console.log(1111);
+      console.log(val);
     }
   },
   data() {
