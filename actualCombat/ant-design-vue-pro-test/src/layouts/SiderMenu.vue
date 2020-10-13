@@ -5,6 +5,7 @@
       :openKeys.sync="openKeys"
       mode="inline"
       :theme="theme"
+      :selectable="!collapsed"
     >
       <template v-for="item in menuData">
         <a-menu-item
@@ -28,6 +29,7 @@
 
 <script>
 import { Menu } from "ant-design-vue";
+import { check } from "../utils/auth";
 const SubMenu = {
   template: `
       <a-sub-menu :key="menuInfo.path" v-bind="$props" v-on="$listeners">
@@ -62,6 +64,16 @@ export default {
     theme: {
       type: String,
       default: "dark"
+    },
+    collapsed: {
+      type: Boolean,
+      default: false
+    }
+  },
+  watch: {
+    "$route.path": function(val) {
+      this.selectedKeys = this.selectedKeysMap[val];
+      this.openKeys = this.collapsed ? [] : this.openKeysMap[val];
     }
   },
   components: {
@@ -82,7 +94,6 @@ export default {
     console.log(this.selectedKeysMap);
     console.log(this.openKeysMap);
     return {
-      collapsed: false,
       menuData,
       selectedKeys: this.selectedKeysMap[this.$route.path],
       openKeys: this.collapsed ? [] : this.openKeysMap[this.$route.path]
@@ -94,13 +105,19 @@ export default {
     },
     getMenuData(routes = [], parentKeys = [], selectedKeys) {
       const menuData = [];
-      routes.forEach(item => {
+      for (let item of routes) {
+        if (item.meta && item.meta.authority && !check(item.meta.authority)) {
+          break;
+        }
         //有name属性且不隐藏的情况
         if (item.name && !item.hiddenInMenu) {
           this.openKeysMap[item.path] = parentKeys;
           this.selectedKeysMap[item.path] = [selectedKeys || item.path];
           const newItem = { ...item };
           delete newItem.children;
+          this.selectedKeysMap[item.path] = [selectedKey || item.path];
+          this.openKeysMap[item.path] = [...parentKeys, item.path];
+
           //有子属性的情况,且子属性不隐藏
           if (item.children && !item.hiddenChildrenInMenu) {
             newItem.children = this.getMenuData(item.children, [
@@ -126,7 +143,8 @@ export default {
             ...this.getMenuData(item.children, [...parentKeys, item.path])
           );
         }
-      });
+      }
+
       return menuData;
     }
   }
