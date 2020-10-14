@@ -79,12 +79,6 @@ export default {
   components: {
     "sub-menu": SubMenu
   },
-  watch: {
-    "$route.path": function(val) {
-      this.selectedKeys = this.selectedKeysMap[val];
-      this.openKeys = this.collapsed ? [] : this.openKeysMap[val];
-    }
-  },
   data() {
     this.selectedKeysMap = {};
     this.openKeysMap = {};
@@ -115,7 +109,7 @@ export default {
           this.selectedKeysMap[item.path] = [selectedKeys || item.path];
           const newItem = { ...item };
           delete newItem.children;
-          this.selectedKeysMap[item.path] = [selectedKey || item.path];
+          this.selectedKeysMap[item.path] = [selectedKeys || item.path];
           this.openKeysMap[item.path] = [...parentKeys, item.path];
 
           //有子属性的情况,且子属性不隐藏
