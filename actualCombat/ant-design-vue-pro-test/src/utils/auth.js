@@ -1,6 +1,6 @@
 // 获取当前用户的权限
 export function getCurrentAuthority() {
-  return ["user"];
+  return ["admin"];
 }
 
 // 检测对应权限是否包含
