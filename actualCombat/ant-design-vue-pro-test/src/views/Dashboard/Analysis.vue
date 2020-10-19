@@ -16,6 +16,7 @@ export default {
       axios
         .get("/api/dashboard/chart", { params: { ID: 123456 } })
         .then(response => {
+          console.log("this is response:", response.data);
           this.chartOption = {
             title: {
               text: "ECharts 入门示例"
@@ -40,7 +41,7 @@ export default {
     this.chartOption = this.getChartData();
     this.interval = setInterval(() => {
       this.chartOption = this.getChartData();
-    }, 3000);
+    }, 10000);
   },
   beforeDestroy() {
     clearInterval(this.interval);

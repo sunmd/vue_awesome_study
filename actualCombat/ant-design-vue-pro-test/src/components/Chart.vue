@@ -19,7 +19,11 @@ export default {
   },
   watch: {
     options(val) {
-      this.chart.setOption(val);
+      console.log("watch");
+      console.log(val);
+      if (val !== undefined) {
+        this.chart.setOption(val);
+      }
     }
     // 深度的扫描消耗不少
     /* options: { */
