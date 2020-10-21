@@ -4,7 +4,16 @@ import router from "./router";
 import store from "./store";
 import Authoried from "./components/Authoried.vue";
 import Auth from "./directives/auth";
-import { Layout, Icon, Drawer, Button, Radio, Menu } from "ant-design-vue";
+import {
+  Layout,
+  Icon,
+  Drawer,
+  Button,
+  Radio,
+  Menu,
+  Input,
+  Form
+} from "ant-design-vue";
 
 Vue.config.productionTip = false;
 
@@ -15,6 +24,8 @@ Vue.use(Button);
 Vue.use(Radio);
 Vue.use(Menu);
 Vue.use(Auth);
+Vue.use(Input);
+Vue.use(Form);
 
 Vue.component("Authoried", Authoried);
 
