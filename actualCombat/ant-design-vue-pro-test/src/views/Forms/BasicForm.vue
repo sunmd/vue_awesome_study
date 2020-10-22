@@ -29,7 +29,7 @@
         v-decorator="[
           'fieldA',
           {
-            initialvalue: '11',
+            initialValue: fieldA,
             rules: [{ required: true, min: 6, message: '必须大于6个字符' }]
           }
         ]"
@@ -56,15 +56,15 @@ export default {
   data() {
     this.form = this.$form.createForm(this);
     return {
-      formlayout: "horizontal",
-      fielda: "hello",
-      fieldb: ""
+      formLayout: "horizontal",
+      fieldA: "hello",
+      fieldB: ""
     };
   },
   mounted() {
     setTimeout(() => {
-      this.form.setFieldsValue({ filedA: "hello world!" });
-    }, 6000);
+      this.form.setFieldsValue({ fieldA: "hello world!" });
+    }, 3000);
   },
   computed: {
     formItemLayout() {
