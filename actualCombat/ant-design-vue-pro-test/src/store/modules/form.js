@@ -4,7 +4,11 @@ import request from "../../utils/request";
 // store的state部分
 const state = {
   step: {
-    payAccount: 1234567
+    payAccount: 1234567,
+    receiverAccount: {
+      type: "alipay",
+      number: ""
+    }
   }
 };
 
