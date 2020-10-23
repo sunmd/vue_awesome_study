@@ -72,7 +72,7 @@ const routes = [
         component: { render: h => h("router-view") },
         children: [
           {
-            path: "/form/baic-form",
+            path: "/form/basic-form",
             name: "basicform",
             meta: { title: "基础表单" },
             component: () =>
