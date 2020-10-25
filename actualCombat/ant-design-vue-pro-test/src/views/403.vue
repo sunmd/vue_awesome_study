@@ -1,5 +1,7 @@
 <template>
-  <div>403</div>
+  <div style="text-align: center;">
+    <IconNotFound type="icon-403biaoqing_chijing" style="font-size: 100px;" />
+  </div>
 </template>
 
 <script>
