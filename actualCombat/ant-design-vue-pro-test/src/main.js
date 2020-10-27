@@ -19,7 +19,9 @@ import {
 Vue.config.productionTip = false;
 
 // 这种方式使用的是ali的服务器下载svg数据
-const IconNotFound = Icon.createFromIconfontCN({ scriptUrl: "//at.alicdn.com/t/font_2156610_c9xb6j1kzmw.js"});
+const IconNotFound = Icon.createFromIconfontCN({
+  scriptUrl: "//at.alicdn.com/t/font_2156610_c9xb6j1kzmw.js"
+});
 
 Vue.use(Layout);
 Vue.use(Icon);

@@ -75,7 +75,7 @@ export default {
     handleSubmit() {
       const { $store, $router, form } = this;
       form.validateFields((err, values) => {
-        if(!err) {
+        if (!err) {
           $store.commit({
             type: "form/saveStepFormData",
             payLoad: values
